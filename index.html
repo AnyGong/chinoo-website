@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CHINOO - Learn Real Chinese, Win Real Future</title>
+    <meta name="description"
+        content="The world's most fun and effective way to learn Chinese. Master Mandarin with CHINOO's immersive lessons and real-world practice." />
+    <meta name="keywords" content="learn chinese, mandarin app, chinese learning, chinoo, speak chinese" />
+    <meta name="author" content="CHINOO App Inc." />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Mobile Optimization -->
+    <meta name="theme-color" content="#2DD4BF" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chinoo.app/" />
+    <meta property="og:title" content="CHINOO - Learn Real Chinese, Win Real Future" />
+    <meta property="og:description"
+        content="The world's most fun and effective way to learn Chinese. Master Mandarin with CHINOO's immersive lessons and real-world practice." />
+    <meta property="og:image" content="https://chinoo.app/images/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://chinoo.app/" />
+    <meta property="twitter:title" content="CHINOO - Learn Real Chinese, Win Real Future" />
+    <meta property="twitter:description"
+        content="The world's most fun and effective way to learn Chinese. Master Mandarin with CHINOO's immersive lessons and real-world practice." />
+    <meta property="twitter:image" content="https://chinoo.app/images/og-image.jpg" />
+
+    <link rel="canonical" href="https://chinoo.app/" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Serif+SC:wght@700&amp;family=Cairo:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <script>
+        /**
+         * Download Buttons Configuration and Rendering Logic
+         */
+        const DownloadConfig = {
+            googlePlay: {
+                url: "#",
+                icon: `<svg class="w-12 h-12 shrink-0 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9,4v40l30.8-20L9,4z" fill="none"></path>
+                <path d="M24,24L4.8,4.8C4.3,5.3,4,6.1,4,7.2v33.6c0,1.1,0.3,1.9,0.8,2.4L24,24z" fill="#4285F4"></path>
+                <path d="M33.6,18.4L24,24l9.6,5.6l0.2,0.1l9-5.2c2.6-1.5,2.6-3.9,0-5.3l-9-5.2H33.6z" fill="#FBBC04"></path>
+                <path d="M24,24l-4.8-4.8L4.8,4.8C5.5,4.1,6.5,3.7,7.8,3.7c1.3,0,14.6,7.7,14.6,7.7L24,24z" fill="#EA4335"></path>
+                <path d="M24,24l9.6,5.6l-9.2,5.3c0,0-13.3,7.7-14.6,7.7c-1.3,0-2.3-0.4-3-1.1L24,24z" fill="#34A853"></path>
+               </svg>`,
+                labelSmall: "buttons.get_it_on", // i18n key
+                labelLarge: "buttons.google_play", // i18n key
+                textSmall: "Get it on",
+                textLarge: "Google Play"
+            },
+            appStore: {
+                url: "#",
+                icon: `<span class="material-icons text-5xl text-slate-900 dark:text-white group-hover:scale-110 duration-300">apple</span>`,
+                labelSmall: "buttons.download_on", // i18n key
+                labelLarge: "buttons.app_store", // i18n key
+                textSmall: "Download on the",
+                textLarge: "App Store"
+            }
+        };
+
+        /**
+         * Detects the user's operating system.
+         * Returns: 'android', 'ios', or 'desktop' (default)
+         */
+        function detectOS() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Windows Phone must come first because its UA also contains "Android"
+            if (/windows phone/i.test(userAgent)) {
+                return 'desktop';
+            }
+
+            if (/android/i.test(userAgent)) {
+                return 'android';
+            }
+
+            // iOS detection from: http://stackoverflow.com/a/9039885/177710
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'ios';
+            }
+
+            return 'desktop';
+        }
+
+        /**
+         * Renders a single button using the shared style
+         */
+        function createButtonHtml(type) {
+            const config = type === 'google' ? DownloadConfig.googlePlay : DownloadConfig.appStore;
+
+            return `
+    <a class="flex items-center gap-5 bg-white dark:bg-slate-800 border-2 border-orange-400 dark:border-orange-500 hover:bg-orange-50 dark:hover:bg-slate-700 px-10 py-5 rounded-full shadow-lg hover:shadow-orange-400/30 transition-all group w-full sm:w-auto min-w-[280px] justify-center transform hover:scale-105 whitespace-nowrap"
+       href="${config.url}">
+        ${config.icon}
+        <div class="text-left rtl:text-right">
+            <p class="text-xs uppercase tracking-wider text-slate-500 font-bold leading-none mb-1.5"
+               data-i18n="${config.labelSmall}">${config.textSmall}</p>
+            <p class="text-2xl font-bold leading-none text-slate-900 dark:text-white"
+               data-i18n="${config.labelLarge}">${config.textLarge}</p>
+        </div>
+    </a>
+    `;
+        }
+
+        /**
+         * Renders the download buttons into the specified container.
+         * Logic:
+         * - Desktop: Show BOTH
+         * - Android: Show ONLY Google Play
+         * - iOS: Show ONLY App Store
+         */
+        function renderDownloadButtons(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const os = detectOS();
+            let buttonsHtml = '';
+
+            if (os === 'android') {
+                buttonsHtml = createButtonHtml('google');
+            } else if (os === 'ios') {
+                buttonsHtml = createButtonHtml('apple');
+            } else {
+                // Desktop or other - show both
+                buttonsHtml = createButtonHtml('google') + createButtonHtml('apple');
+            }
+
+            container.innerHTML = buttonsHtml;
+
+            // If we are adding dynamic content, we might need to re-trigger translations if they haven't run yet,
+            // or if this runs after translation init.
+            // Assuming updateContent() is global and can be called, or we rely on the main script to call it.
+            // Just in case, if window.translations are loaded, let's try to update the new elements.
+            const currentLang = document.documentElement.lang || 'en';
+            if (typeof updateContent === 'function') {
+                updateContent(currentLang);
+            }
+        }
+
+        // Global exposure if needed
+        window.renderDownloadButtons = renderDownloadButtons;
+
+        /**
+         * Creates a compact button HTML for the sticky footer
+         */
+        function createCompactButtonHtml(type) {
+            const config = type === 'google' ? DownloadConfig.googlePlay : DownloadConfig.appStore;
+
+            // Simplified SVG for compact view (or just reuse icon)
+            // Note: Tailwind classes adjusted for smaller size
+            const iconCompact = type === 'google'
+                ? `<svg class="w-8 h-8 shrink-0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9,4v40l30.8-20L9,4z" fill="none"></path>
+            <path d="M24,24L4.8,4.8C4.3,5.3,4,6.1,4,7.2v33.6c0,1.1,0.3,1.9,0.8,2.4L24,24z" fill="#4285F4"></path>
+            <path d="M33.6,18.4L24,24l9.6,5.6l0.2,0.1l9-5.2c2.6-1.5,2.6-3.9,0-5.3l-9-5.2H33.6z" fill="#FBBC04"></path>
+            <path d="M24,24l-4.8-4.8L4.8,4.8C5.5,4.1,6.5,3.7,7.8,3.7c1.3,0,14.6,7.7,14.6,7.7L24,24z" fill="#EA4335"></path>
+            <path d="M24,24l9.6,5.6l-9.2,5.3c0,0-13.3,7.7-14.6,7.7c-1.3,0-2.3-0.4-3-1.1L24,24z" fill="#34A853"></path>
+           </svg>`
+                : `<span class="material-icons text-3xl text-white">apple</span>`;
+
+            // Only showing "Download" or simple text for compact space
+            // But config says "Get it on Google Play"
+            // Let's use the large label text but with smaller font
+            return `
+    <a class="flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-full shadow-md hover:scale-105 transition-transform"
+       href="${config.url}">
+        ${iconCompact}
+        <div class="text-left rtl:text-right">
+            <p class="text-[10px] opacity-80 leading-none mb-0.5" data-i18n="${config.labelSmall}">${config.textSmall}</p>
+            <p class="text-sm font-bold leading-none" data-i18n="${config.labelLarge}">${config.textLarge}</p>
+        </div>
+    </a>
+    `;
+        }
+
+        /**
+         * Renders the sticky footer for Mobile
+         */
+        function renderStickyFooter() {
+            const container = document.getElementById('sticky-download-btn-container'); // This will be inside the footer
+            if (!container) return;
+
+            const os = detectOS();
+            let btnHtml = '';
+
+            // Logic: Desktop -> Hidden via CSS anyway, but we render nothing just in case
+            // We want to show ONE button relevant to OS.
+            if (os === 'android') {
+                btnHtml = createCompactButtonHtml('google');
+            } else if (os === 'ios') {
+                btnHtml = createCompactButtonHtml('apple');
+            } else {
+                // Fallback for mobile browser testing on unknown OS: Show Google (most common) or App Store?
+                // Or show generic DL? Let's show Google Play as default for mobile-web if not iOS.
+                // Actually, user request said "matching the type...". 
+                // If we can't detect, maybe alternating or just Google is safer globally.
+                btnHtml = createCompactButtonHtml('google');
+            }
+
+            container.innerHTML = btnHtml;
+
+            // Re-trigger translations for the new button
+            const currentLang = document.documentElement.lang || 'en';
+            if (typeof updateContent === 'function') {
+                updateContent(currentLang);
+            }
+        }
+
+        window.renderStickyFooter = renderStickyFooter;
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2DD4BF",
+                        "primary-dark": "#14b8a6",
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#0F172A",
+                        "pale-teal": "#E1F2F0",
+                        "off-white-darker": "#F1F5F7",
+                        "active-nav": "#F97316", // Deep Orange for active state
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        serif: ["Noto Serif SC", "serif"],
+                        arabic: ["Cairo", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                        '3xl': '2rem',
+                        '4xl': '2.5rem',
+                        '5xl': '3rem',
+                        'full': '9999px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        .brush-underline {
+            position: relative;
+            display: inline-block
+        }
+
+        .brush-underline::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDP4VzUT8Xol-gk5AN5pVaGD3dK3VMqzDIKoyvJM1nBZijMT-9FfYOd2QjRgHQhBwWr-U0PsnfUVEyMActbLJ-8iXQoRJKA23FKy1UIi2psF-RIyf-CMD9FdXU-X9Fuaeq7n6iC9Hbi336iZKYRif5DsvIKGwQu-4lkw4_-t8N53ep8LvCGeS64d6kiVVEZGVFoXTqUW1zAwy0pyOYYtGC3cVLFRxpwbYZJ-JpvKJgOA9YM5IZtCXXAB6RvGf6wf7A5uSYIrY5XcL0);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            z-index: -1
+        }
+
+        [dir="rtl"] .brush-underline::after {
+            left: auto;
+            right: 0;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .animate-float-slow {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-medium {
+            animation: float 5s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .animate-float-fast {
+            animation: float 4s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        .hero-bg-overlay {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuA_Jv_HXs8bzIeqzo6CcG3eQTMB99HGy2H-7LFZ0TuvuPmQ2RdQs7qOM1mKDcbIYD_bYWN8xKcoWnDS44G9xqabS3blwaYWuby2ppX4a7POUJ902wPnrmhY-XNxb8jbBLyvRUnU19J-uoCPyMQalcjdoCaC2Pqx1NczvFHjP6aLfl3fvpUTwGE-o0VaIoNhxscxTKp7SvTjhxjDHVW0H-xOChdHgxOS8P8XXpdhihIqJ-cwWDfdtzo-gDXCWUd7PWwEzsXDJVEBhJE);
+            background-position: center 30%;
+            background-size: cover;
+            position: absolute;
+            inset: 0;
+            z-index: -1
+        }
+
+        .hero-bg-gradient {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.9) 100%);
+            position: absolute;
+            inset: 0;
+            z-index: -1
+        }
+
+        .dark .hero-bg-gradient {
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.95) 100%)
+        }
+
+        /* Language specific font overrides */
+        [lang="ar"] {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+</head>
+
+<body
+    class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <nav
+        class="fixed w-full top-0 z-50 bg-background-light/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20">
+                        <span class="text-white font-serif text-3xl font-bold">漢</span>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">CHINOO</span>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-2 rtl:space-x-reverse">
+                    <a class="px-5 py-3 text-lg font-bold text-active-nav transition-colors relative after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-active-nav after:rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg"
+                        href="#home" data-i18n="nav.home">Home</a>
+                    <a class="px-5 py-3 text-lg font-bold text-slate-600 dark:text-slate-300 hover:text-active-nav transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg"
+                        href="#about-us" data-i18n="nav.about">About</a>
+                    <a class="px-5 py-3 text-lg font-bold text-slate-600 dark:text-slate-300 hover:text-active-nav transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg"
+                        href="#features" data-i18n="nav.features">Reasons</a>
+                    <a class="px-5 py-3 text-lg font-bold text-slate-600 dark:text-slate-300 hover:text-active-nav transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg"
+                        href="#contact-us" data-i18n="nav.contact">Contact</a>
+                    <a class="px-5 py-3 text-lg font-bold text-slate-600 dark:text-slate-300 hover:text-active-nav transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg"
+                        href="#download" data-i18n="nav.download">Download</a>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center space-x-4 lg:space-x-6 rtl:space-x-reverse">
+                    <div
+                        class="hidden lg:flex items-center space-x-4 rtl:space-x-reverse border-r border-slate-200 dark:border-slate-700 pr-6 mr-2">
+                        <a class="flex items-center justify-center w-8 h-8 rounded-full bg-black text-white hover:scale-110 transition-transform shadow-md"
+                            href="#" title="TikTok"><i class="fab fa-tiktok text-xs"></i></a>
+                        <a class="flex items-center justify-center w-8 h-8 rounded-full bg-[#FF0000] text-white hover:scale-110 transition-transform shadow-md"
+                            href="#" title="YouTube"><i class="fab fa-youtube text-xs"></i></a>
+                        <a class="flex items-center justify-center w-8 h-8 rounded-full bg-[#1877F2] text-white hover:scale-110 transition-transform shadow-md"
+                            href="#" title="Facebook"><i class="fab fa-facebook-f text-xs"></i></a>
+                    </div>
+                    <div class="relative">
+                        <button aria-label="Select Language" id="lang-dropdown-button"
+                            class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                            onclick="toggleLanguageMenu(event)">
+                            <span class="material-icons text-xl">g_translate</span>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div id="language-dropdown"
+                            class="hidden fixed top-20 left-0 w-full lg:absolute lg:top-full lg:left-auto lg:right-0 lg:rtl:right-auto lg:rtl:left-0 lg:mt-2 lg:w-40 z-50 shadow-xl lg:rounded-xl overflow-hidden bg-white dark:bg-slate-800 border-t lg:border border-slate-100 dark:border-slate-700 transition-all duration-300 origin-top animate-in slide-in-from-top-2">
+                            <div class="max-w-7xl mx-auto px-0 lg:p-0">
+                                <button
+                                    class="block w-full text-left rtl:text-right px-6 lg:px-4 py-4 lg:py-3 text-lg lg:text-base font-medium hover:bg-slate-50 dark:hover:bg-slate-700 border-b lg:border-none border-slate-50 dark:border-slate-700/50"
+                                    onclick="switchLanguage('en'); toggleLanguageMenu(event)">
+                                    English
+                                </button>
+                                <button
+                                    class="block w-full text-left rtl:text-right px-6 lg:px-4 py-4 lg:py-3 text-lg lg:text-base font-medium hover:bg-slate-50 dark:hover:bg-slate-700 border-b lg:border-none border-slate-50 dark:border-slate-700/50"
+                                    onclick="switchLanguage('ar'); toggleLanguageMenu(event)">
+                                    العربية
+                                </button>
+                                <button
+                                    class="block w-full text-left rtl:text-right px-6 lg:px-4 py-4 lg:py-3 text-lg lg:text-base font-medium hover:bg-slate-50 dark:hover:bg-slate-700"
+                                    onclick="switchLanguage('cn'); toggleLanguageMenu(event)">
+                                    简体中文
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                        onclick="toggleTheme()">
+                        <span class="material-icons text-xl" id="theme-icon">dark_mode</span>
+                    </button>
+                    <!-- Hamburger Toggle -->
+                    <button id="hamburger-btn"
+                        class="lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        onclick="toggleMobileMenu(event)">
+                        <span
+                            class="w-6 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-transform duration-300 origin-center"
+                            id="ham-line-1"></span>
+                        <span class="w-6 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-opacity duration-300"
+                            id="ham-line-2"></span>
+                        <span
+                            class="w-6 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-transform duration-300 origin-center"
+                            id="ham-line-3"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown (Below Navbar) -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl absolute w-full left-0 top-20 shadow-2xl animate-in slide-in-from-top-5 duration-200">
+            <div class="px-6 py-6 flex flex-col gap-4">
+                <a class="text-lg font-bold text-slate-900 dark:text-white hover:text-primary transition-colors py-2"
+                    href="#home" onclick="closeMobileMenu()" data-i18n="nav.home">Home</a>
+                <a class="text-lg font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors py-2"
+                    href="#about-us" onclick="closeMobileMenu()" data-i18n="nav.about">About</a>
+                <a class="text-lg font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors py-2"
+                    href="#features" onclick="closeMobileMenu()" data-i18n="nav.features">Reasons</a>
+                <a class="text-lg font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors py-2"
+                    href="#contact-us" onclick="closeMobileMenu()" data-i18n="nav.contact">Contact</a>
+                <a class="text-lg font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors py-2"
+                    href="#download" onclick="closeMobileMenu()" data-i18n="nav.download">Download</a>
+
+                <div class="h-px bg-slate-100 dark:bg-slate-800 my-2"></div>
+
+                <div class="flex justify-center gap-6 py-2">
+                    <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-lg hover:scale-110 transition-transform"
+                        href="#"><i class="fab fa-tiktok"></i></a>
+                    <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-lg text-[#FF0000] hover:scale-110 transition-transform"
+                        href="#"><i class="fab fa-youtube"></i></a>
+                    <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-lg text-[#1877F2] hover:scale-110 transition-transform"
+                        href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative pt-32 pb-32 overflow-hidden min-h-screen flex items-center" id="home">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-bg-gradient"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="max-w-5xl mx-auto mb-16">
+                <h1
+                    class="text-6xl md:text-8xl font-serif font-bold text-slate-900 dark:text-white leading-tight mb-8 drop-shadow-md">
+                    <span data-i18n="hero.title_line_1">Master Chinese</span> <br />
+                    <span class="brush-underline" data-i18n="hero.title_line_2">Anytime, Anywhere</span>
+                </h1>
+                <p class="text-xl md:text-3xl font-medium text-primary mb-8 tracking-wide leading-relaxed drop-shadow-sm font-bold bg-white/30 dark:bg-black/30 backdrop-blur-sm rounded-full inline-block px-6 py-2"
+                    data-i18n="hero.pill">
+                    Learn Real Chinese, Win Real Future.
+                </p>
+                <p class="text-xl text-slate-800 dark:text-slate-200 font-medium max-w-2xl mx-auto mb-12 leading-relaxed drop-shadow-sm"
+                    data-i18n="hero.description">
+                    The world's most fun and effective way to learn Chinese.
+                    Used by millions of learners worldwide to bridge cultures.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-12 mb-16 w-full" id="buttons-hero">
+                    <!-- Buttons rendered by inline script -->
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div
+                class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-12 opacity-90 hover:grayscale-0 transition-all duration-700 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-3xl p-8 shadow-glass">
+                <div class="flex flex-col items-center gap-2">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-icons text-3xl">groups</span>
+                        <span class="text-4xl font-bold text-slate-900 dark:text-white"
+                            data-i18n="stats.learners.count">5M+</span>
+                    </div>
+                    <span class="text-base font-medium text-slate-500 dark:text-slate-400"
+                        data-i18n="stats.learners.label">Active Learners</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="flex items-center gap-2 text-yellow-500">
+                        <span class="material-icons text-3xl">star</span>
+                        <span class="text-4xl font-bold text-slate-900 dark:text-white"
+                            data-i18n="stats.rating.count">4.9</span>
+                    </div>
+                    <span class="text-base font-medium text-slate-500 dark:text-slate-400"
+                        data-i18n="stats.rating.label">App Rating</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="flex items-center gap-2 text-blue-500">
+                        <span class="material-icons text-3xl">public</span>
+                        <span class="text-4xl font-bold text-slate-900 dark:text-white"
+                            data-i18n="stats.countries.count">180+</span>
+                    </div>
+                    <span class="text-base font-medium text-slate-500 dark:text-slate-400"
+                        data-i18n="stats.countries.label">Countries</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="flex items-center gap-2 text-green-500">
+                        <span class="material-icons text-3xl">library_books</span>
+                        <span class="text-4xl font-bold text-slate-900 dark:text-white"
+                            data-i18n="stats.lessons.count">2k+</span>
+                    </div>
+                    <span class="text-base font-medium text-slate-500 dark:text-slate-400"
+                        data-i18n="stats.lessons.label">Lessons</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section
+        class="py-12 lg:py-20 relative overflow-hidden scroll-mt-20 bg-gradient-to-br from-pale-teal via-white to-orange-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-colors duration-1000"
+        id="about-us">
+        <div
+            class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-200/20 dark:bg-orange-900/10 rounded-full blur-[100px] pointer-events-none">
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col">
+            <div class="mb-4 lg:mb-8 flex flex-col items-center text-center order-1">
+                <span class="text-orange-500 font-bold tracking-widest uppercase text-sm mb-2 block"
+                    data-i18n="about.chip">Discover</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight"
+                    data-i18n="about.title">
+                    Our Chinese Learning Story
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium" data-i18n="about.subtitle">Discover our
+                    learning philosophy.</p>
+            </div>
+            <!-- Reduced Height Container -->
+            <!-- flexible Height Container -->
+            <!-- flexible Height Container -->
+            <div class="relative mt-4 order-2 min-h-[500px]" id="about-slider-container">
+                <!-- Static Navigation Overlay -->
+                <div class="absolute inset-0 z-20 pointer-events-none">
+                    <!-- Arrows Removed as requested -->
+
+                    <!-- Bar Indicators (Visible on all devices) -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-auto flex gap-2">
+                        <div class="h-1.5 rounded-full transition-all duration-300 cursor-pointer dot-indicator w-12 bg-primary"
+                            onclick="goToSlide(0)"></div>
+                        <div class="h-1.5 rounded-full transition-all duration-300 cursor-pointer dot-indicator w-4 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
+                            onclick="goToSlide(1)">
+                        </div>
+                        <div class="h-1.5 rounded-full transition-all duration-300 cursor-pointer dot-indicator w-4 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
+                            onclick="goToSlide(2)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 1 -->
+                <div id="slide-1"
+                    class="relative flex flex-col lg:flex-row items-center gap-4 lg:gap-12 transition-opacity duration-1000 opacity-100 z-10 slide-item">
+                    <div class="flex-1 order-2 lg:order-1 text-center flex flex-col items-center">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-slate-400 dark:text-slate-500 font-medium"
+                                data-i18n="about.slide_sub">Core Philosophy</span>
+                        </div>
+                        <!-- Reduced title size -->
+                        <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+                            <span data-i18n="about.slide_title_1">Learn Chinese</span> <br />
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600"
+                                data-i18n="about.slide_title_2">The Fun Way</span>
+                        </h3>
+                        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium max-w-lg mx-auto"
+                            data-i18n="about.slide_desc">
+                            Experience a revolutionary way to master Mandarin. Our app combines scientifically proven
+                            methods with gamified elements to make learning addictive and effective.
+                        </p>
+
+
+                    </div>
+                    <!-- Slanted Block 1 -->
+                    <div
+                        class="flex-1 order-1 lg:order-2 w-full flex justify-center items-center scale-90 lg:scale-100">
+                        <div class="relative group cursor-grab active:cursor-grabbing">
+                            <!-- Slanted Container -->
+                            <div
+                                class="relative z-10 bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-500 w-[280px] h-[400px] sm:w-[320px] sm:h-[450px]">
+                                <div class="absolute inset-0 bg-gradient-to-b from-primary via-teal-500 to-teal-700 flex flex-col"
+                                    dir="ltr">
+                                    <div class="px-6 pt-8 pb-4 flex justify-between items-center text-white/90 z-20">
+                                        <span class="material-icons text-xl">menu</span>
+                                        <div class="font-serif font-bold text-lg tracking-widest">漢 CHINOO</div>
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+                                            <span class="material-icons text-sm">notifications</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 px-6 pb-8 overflow-hidden flex flex-col justify-center">
+                                        <div class="text-white text-center mb-8">
+                                            <div class="text-5xl mb-2">👋</div>
+                                            <h4 class="text-2xl font-bold mb-1" data-i18n="about.phone_greeting">Ni
+                                                Hao!</h4>
+                                            <p class="text-white/70">Ready to learn today?</p>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div
+                                                class="aspect-square bg-white/10 backdrop-blur-md rounded-[1.5rem] flex flex-col items-center justify-center gap-3 border border-white/20 shadow-lg">
+                                                <div
+                                                    class="w-12 h-12 rounded-2xl bg-yellow-400 flex items-center justify-center shadow-lg text-yellow-900">
+                                                    <span class="material-icons text-2xl">school</span>
+                                                </div>
+                                                <span class="text-white font-bold text-sm">Study</span>
+                                            </div>
+                                            <div
+                                                class="aspect-square bg-white/10 backdrop-blur-md rounded-[1.5rem] flex flex-col items-center justify-center gap-3 border border-white/20 shadow-lg">
+                                                <div
+                                                    class="w-12 h-12 rounded-2xl bg-purple-400 flex items-center justify-center shadow-lg text-purple-900">
+                                                    <span class="material-icons text-2xl">sports_esports</span>
+                                                </div>
+                                                <span class="text-white font-bold text-sm">Play</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Shine effect -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none">
+                                </div>
+                            </div>
+                            <div
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-teal-400/20 rounded-full blur-[50px] -z-10 animate-pulse">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div id="slide-2"
+                    class="absolute inset-0 flex flex-col lg:flex-row items-center gap-4 lg:gap-12 transition-opacity duration-1000 opacity-0 pointer-events-none slide-item">
+                    <div class="flex-1 order-2 lg:order-1 text-center flex flex-col items-center">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-slate-400 dark:text-slate-500 font-medium"
+                                data-i18n="about.slide_sub_2">Immersive Practice</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+                            <span data-i18n="about.slide_title_2_1">Speak Like a Local</span> <br />
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600"
+                                data-i18n="about.slide_title_2_2">Real Conversations</span>
+                        </h3>
+                        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium max-w-lg mx-auto"
+                            data-i18n="about.slide_desc_2">
+                            Practice real-world scenarios with our AI conversation partner. Get instant feedback on your
+                            pronunciation and fluency.
+                        </p>
+
+                    </div>
+                    <!-- Slanted Block 2 -->
+                    <div
+                        class="flex-1 order-1 lg:order-2 w-full flex justify-center items-center scale-90 lg:scale-100">
+                        <div class="relative group cursor-grab active:cursor-grabbing">
+                            <div
+                                class="relative z-10 bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-500 w-[280px] h-[400px] sm:w-[320px] sm:h-[450px]">
+                                <div class="absolute inset-0 bg-gradient-to-b from-blue-500 to-indigo-700 flex flex-col"
+                                    dir="ltr">
+                                    <div class="px-6 pt-8 pb-4 flex justify-between items-center text-white/90 z-20">
+                                        <span class="material-icons text-xl">arrow_back</span>
+                                        <div class="font-serif font-bold text-lg tracking-widest"
+                                            data-i18n="about.phone_chat_header">Chat
+                                        </div>
+                                        <span class="material-icons text-xl">more_horiz</span>
+                                    </div>
+                                    <div class="flex-1 px-6 pb-8 flex flex-col justify-end gap-4">
+                                        <div
+                                            class="bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none self-start max-w-[80%]">
+                                            <p class="text-white text-sm">Nǐ hǎo! Nǐ jiào shénme míngzì?</p>
+                                        </div>
+                                        <div class="bg-white/90 p-4 rounded-2xl rounded-tr-none self-end max-w-[80%]">
+                                            <p class="text-slate-900 text-sm">Wǒ jiào John. Nǐ ne?</p>
+                                        </div>
+                                        <div
+                                            class="bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none self-start max-w-[80%]">
+                                            <p class="text-white text-sm">Hěn gāoxìng rènshí nǐ!</p>
+                                        </div>
+                                        <button
+                                            class="bg-white text-blue-600 rounded-full py-4 font-bold shadow-lg mt-4 flex items-center justify-center gap-2">
+                                            <span class="material-icons">mic</span> <span
+                                                data-i18n="about.phone_mic_hint">Tap to Speak</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div id="slide-3"
+                    class="absolute inset-0 flex flex-col lg:flex-row items-center gap-4 lg:gap-12 transition-opacity duration-1000 opacity-0 pointer-events-none slide-item">
+                    <div class="flex-1 order-2 lg:order-1 text-center flex flex-col items-center">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-slate-400 dark:text-slate-500 font-medium"
+                                data-i18n="about.slide_sub_3">Cultural Insights</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+                            <span data-i18n="about.slide_title_3_1">Master the Culture</span> <br />
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600"
+                                data-i18n="about.slide_title_3_2">Beyond Words</span>
+                        </h3>
+                        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium max-w-lg mx-auto"
+                            data-i18n="about.slide_desc_3">
+                            Understand the history and traditions behind the language. Learn idioms, customs, and
+                            etiquette to truly connect.
+                        </p>
+
+                    </div>
+                    <!-- Slanted Block 3 -->
+                    <div
+                        class="flex-1 order-1 lg:order-2 w-full flex justify-center items-center scale-90 lg:scale-100">
+                        <div class="relative group cursor-grab active:cursor-grabbing">
+                            <div
+                                class="relative z-10 bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-500 w-[280px] h-[400px] sm:w-[320px] sm:h-[450px]">
+                                <div class="absolute inset-0 bg-gradient-to-b from-orange-600 to-red-800 flex flex-col"
+                                    dir="ltr">
+                                    <div class="px-6 pt-8 pb-4 flex justify-between items-center text-white/90 z-20">
+                                        <span class="material-icons text-xl">menu</span>
+                                        <div class="font-serif font-bold text-lg tracking-widest"
+                                            data-i18n="about.phone_culture_header">Culture
+                                        </div>
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+                                            <span class="material-icons text-sm">favorite</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 px-6 pb-8 overflow-hidden flex flex-col justify-center">
+                                        <div
+                                            class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center">
+                                            <div
+                                                class="w-20 h-20 bg-red-500 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-white/20">
+                                                <span class="material-icons text-4xl text-white">restaurant</span>
+                                            </div>
+                                            <h3 class="text-white text-xl font-bold mb-2"
+                                                data-i18n="about.phone_culture_title">Dining Etiquette</h3>
+                                            <p class="text-white/80 text-sm" data-i18n="about.phone_culture_desc">
+                                                Did you know? It's polite to
+                                                leave a
+                                                little bit of food on your plate to show the host gave you enough!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Static Buttons Area (Hidden on Mobile/Tablet if you want, but user asked to be visible below nav) -->
+            <div class="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center w-full order-3 mt-2 mb-4 lg:hidden"
+                id="buttons-about-mobile">
+                <!-- Buttons rendered by inline script -->
+            </div>
+
+            <!-- Desktop Buttons -->
+            <div class="hidden lg:flex flex-col sm:flex-row gap-6 justify-center w-full order-4 mt-8"
+                id="buttons-about-desktop">
+                <!-- Buttons rendered by inline script -->
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-background-light dark:bg-slate-900/50 scroll-mt-20" id="features">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <span
+                    class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-xs tracking-widest uppercase mb-4"
+                    data-i18n="features.chip">
+                    YǑU SHÌ • OUR ADVANTAGE
+                </span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white" data-i18n="features.title">
+                    Why Learning With Us?
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium" data-i18n="features.subtitle">Why
+                    students choose us.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-10 mt-8">
+                <!-- Feature 1 -->
+                <div
+                    class="group relative p-10 bg-white dark:bg-slate-800 rounded-[2rem] transition-all hover:-translate-y-2 hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <div
+                        class="absolute right-0 rtl:right-auto rtl:left-0 top-1/2 -translate-y-1/2 opacity-5 dark:opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-500 text-slate-900 dark:text-white">
+                        <span class="material-icons text-[10rem]">record_voice_over</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 bg-white dark:bg-slate-700 rounded-2xl shadow-sm flex items-center justify-center mb-8 text-primary border border-slate-100 dark:border-slate-600">
+                            <span class="material-symbols-outlined text-4xl font-light">translate</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2"
+                            data-i18n="features.f1.title">
+                            Native Mastery</h3>
+                        <p class="text-primary italic font-serif mb-6 text-sm font-medium"
+                            data-i18n="features.f1.subtitle">
+                            fā yīn biāo zhǔn</p>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="features.f1.desc">
+                            Perfect your tones with advanced AI feedback and real native recordings from speakers in
+                            Beijing.
+                        </p>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div
+                    class="group relative p-10 bg-white dark:bg-slate-800 rounded-[2rem] transition-all hover:-translate-y-2 hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <div
+                        class="absolute right-[-20px] rtl:right-auto rtl:left-[-20px] bottom-[-20px] opacity-5 dark:opacity-10 pointer-events-none group-hover:rotate-6 rtl:group-hover:-rotate-6 transition-transform duration-500 text-slate-900 dark:text-white">
+                        <span class="material-icons text-[12rem]">menu_book</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 bg-white dark:bg-slate-700 rounded-2xl shadow-sm flex items-center justify-center mb-8 text-orange-500 border border-slate-100 dark:border-slate-600">
+                            <span class="material-symbols-outlined text-4xl font-light">temple_buddhist</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2"
+                            data-i18n="features.f2.title">
+                            Cultural Context</h3>
+                        <p class="text-orange-400 italic font-serif mb-6 text-sm font-medium"
+                            data-i18n="features.f2.subtitle">wén huà dǐ yùn</p>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="features.f2.desc">
+                            Deep dive into history and modern life through immersive storytelling, from ancient poems to
+                            modern slang.
+                        </p>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div
+                    class="group relative p-10 bg-white dark:bg-slate-800 rounded-[2rem] transition-all hover:-translate-y-2 hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <div
+                        class="absolute right-0 rtl:right-auto rtl:left-0 top-10 opacity-5 dark:opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-500 text-slate-900 dark:text-white">
+                        <span class="material-icons text-[10rem]">dashboard</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 bg-white dark:bg-slate-700 rounded-2xl shadow-sm flex items-center justify-center mb-8 text-emerald-500 border border-slate-100 dark:border-slate-600">
+                            <span class="material-symbols-outlined text-4xl font-light">smart_toy</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2"
+                            data-i18n="features.f3.title">
+                            Smart Adaptation</h3>
+                        <p class="text-emerald-500 italic font-serif mb-6 text-sm font-medium"
+                            data-i18n="features.f3.subtitle">zhì néng xué xí</p>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="features.f3.desc">
+                            Your journey adapts to your pace. Our algorithm ensures every minute counts toward true
+                            fluency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-32 bg-[#E0F2F1] dark:bg-slate-900 overflow-hidden" id="download">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6" data-i18n="cta.title">Start
+                Your Journey Today!</h2>
+            <p class="text-slate-600 dark:text-slate-400 font-medium mb-6" data-i18n="cta.subtitle">Join our global
+                community.</p>
+            <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-12 max-w-2xl mx-auto font-medium"
+                data-i18n="cta.desc">Join 5M+ global learners & master Chinese with ease</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center" id="buttons-download">
+                <!-- Buttons rendered by inline script -->
+            </div>
+        </div>
+        <!-- Community Images (kept from original) -->
+        <img alt="Community Member"
+            class="absolute top-24 left-[10%] lg:left-[15%] w-16 h-16 rounded-full border-4 border-white shadow-xl animate-float-slow hidden md:block"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDukmoUeV4WRJxFa1BTjMa2b-v1-5Tfk2lbBfME2kA04o72asFSow9Z0pihEyq56IHl_7ChR4azy_TZztu_BnDYGRdI69W3RIl7gSLBt4sBI5K3lLkU3xYhLkZXCx_LQ2c23DCNCPwQTL79Erz46O09U0VKF0utOutvXALrkgVK31huI66pj8UEZGA-ISCYok5vi3LSmXqoo3JFLv0nCB25Gh343tyGXx67Sm-_ej9TV8-497iYF7V9Lkvo6TIyKJvRvNZUF9bW5Ag" />
+        <img alt="Community Member"
+            class="absolute top-16 right-[10%] lg:right-[15%] w-20 h-20 rounded-full border-4 border-white shadow-xl animate-float-medium hidden md:block"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMJfS3uBM0CqmE3YYlp23j6_xcpG7W_1-WWHItI6Nhvs8EYWdpwxKfoFzssQr-sH0kW5iwH4AewHLq-6KBLQMeidMNcbOMQbrOBu0vHk70bpKHvYwqzsfJu6PG8YQfQZI_sHTiqFiDnmCCGPRcRepXdGNRNTmkbGlxPRxOM7dqauPj4WHavEF2WtnBu7_DZIroBB5mEAPt089k_mVVYJ7u3zwvG9UrDQxCQfnzjb-tajESd6r5TZJrSrYya9rOLu3yNZGdfd5GZlQ" />
+        <img alt="Community Member"
+            class="absolute bottom-16 left-[8%] lg:left-[12%] w-20 h-20 rounded-full border-4 border-white shadow-xl animate-float-medium hidden md:block"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqHtJs6Jmri6ZzdfeqkMReL9QtZAt6pZjrKwXpkGG-p-DGYSdXEZxKz7AnaNu8nKjzknCnJEVqTMa8Xw0HFZAgiijRMYdwkne7Nuz1E1K5pzso9NuynI40TPji41t2uo9fZGWhqCnsx5-H9HlWfLacItOPYIF--eCwR7o_JdANvGFlAs2fNalyXohLYFhShXUfMV69mrpPSk5gz4Ki_JU0sYVrx3jUWbtM0onWbUQoMc_ygNr_uRNZ-Kt5OQotMdaQ0l-cFqIHiD4" />
+        <img alt="Community Member"
+            class="absolute bottom-24 right-[12%] lg:right-[18%] w-16 h-16 rounded-full border-4 border-white shadow-xl animate-float-fast hidden md:block"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGb8aDUKLZJKMUr5TlqaWdDowWmrqmAJFkwqe5YZFDtVEmBsBLH7xF0CFveM73eYgvuaqjSXIKuv5tvChTq2zl48h2X6K5V3jIIzCyy2qNoUsLr_u08G8-ajgDLbWv9waucb7w1FU6sjGr49zoOOVXf53n6xGU4BQrxcuUs9gGg7BcB7sMFzzJHiixMt5EkpiQSBJ43QhkOquQOwZqYca83OT-RIFyX11SKo9XsEgv1Rxt7P-XEWuNCxxSRdhPbRcyPM66vVxopEk" />
+        <img alt="Community Member"
+            class="absolute top-1/2 left-[5%] -translate-y-1/2 w-14 h-14 rounded-full border-4 border-white shadow-xl animate-float-slow hidden xl:block"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVnNh_kEFa-B8Xv7GD_acqxXKqheu1FKORCEz3ILilfmq16350zEbS-bMNZrT6N8oaZVeWh3Q7hCN2KpJ9M15100b_YbTuXBUevCJMcPWCWywGry9pr0fnxzZQRaBg55_P-3IVVotPesOYLfqBkNm8FpjUDfb81yWPjxWEdSd2EcFKGYMAulHVH6E8L7HPlIfTinYeRsrB_d6KFnEp3pjI5UFNz4etbMsrgl6tCzxsHL-UkdCu38caA_JILKiGqAJnGw9peh_zJQo" />
+        <img alt="Community Member"
+            class="absolute top-1/2 right-[5%] -translate-y-1/2 w-14 h-14 rounded-full border-4 border-white shadow-xl animate-float-slow hidden xl:block"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcOHw7cRxQF_qqXkh5SDuhSvp0MWbZe7Qr-WKPuFYrlXyCuz_oX1ua72kke0u8UmH4AKexwBTAWTZEz81yqenskQMTfzHN7mdsMgZIl2n8t1-H4NoOReO3gxrR0B_N1NrJwaK53hgmxUkuFetAbYvfGjBCOMFJcWVpRlttmx0q8HGiV2-nB_A0apaj0ftYgory168kC13zW8_jD5vfLvDcm6HZ7NT-IoFAO32yAlZv0Q-3PKDRSGd0welcZfs-bFEh2ZFq5_qgGno" />
+    </section>
+
+    <footer
+        class="bg-primary/5 dark:bg-slate-900/30 scroll-mt-20 border-t border-slate-100 dark:border-slate-800 py-16 pb-32 md:pb-16"
+        id="contact-us">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4" data-i18n="footer.title">
+                    Contact Us</h2>
+                <p class="text-slate-600 dark:text-slate-400 font-medium mb-4" data-i18n="footer.subtitle">Get in touch
+                    with us.</p>
+                <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed"
+                    data-i18n="footer.desc">
+                    Join our vibrant community on social media or reach out directly.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
+                <!-- X -->
+                <a class="group relative overflow-hidden bg-white dark:bg-slate-800 rounded-3xl p-10 border border-slate-100 dark:border-slate-700 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
+                    href="#">
+                    <div
+                        class="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8" fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2" data-i18n="footer.x_follow">
+                        Follow on X</h3>
+                    <span class="text-primary font-bold text-lg group-hover:underline">@CHINOO_App</span>
+                </a>
+                <!-- WhatsApp -->
+                <a class="group relative overflow-hidden bg-white dark:bg-slate-800 rounded-3xl p-10 border border-slate-100 dark:border-slate-700 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
+                    href="#">
+                    <div
+                        class="absolute inset-0 bg-[#25D366] opacity-0 group-hover:opacity-5 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="w-20 h-20 rounded-full bg-[#25D366] text-white flex items-center justify-center mb-8 text-4xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2" data-i18n="footer.chat_whatsapp">
+                        Chat on WhatsApp</h3>
+                    <span class="text-primary font-bold text-lg group-hover:underline">+1 234 567 890</span>
+                </a>
+                <!-- Email -->
+                <a class="group relative overflow-hidden bg-white dark:bg-slate-800 rounded-3xl p-10 border border-slate-100 dark:border-slate-700 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
+                    href="mailto:support@chinoo.io">
+                    <div
+                        class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-icons text-4xl">email</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2" data-i18n="footer.email_support">
+                        Email Support</h3>
+                    <span class="text-primary font-bold text-lg group-hover:underline">support@chinoo.io</span>
+                </a>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-800 pt-16">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div class="flex items-center gap-3 mb-2 md:mb-0">
+                        <div
+                            class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                            <span class="text-white font-serif font-bold text-xl">漢</span>
+                        </div>
+                        <span class="font-bold text-xl text-slate-900 dark:text-white">CHINOO</span>
+                    </div>
+                    <div
+                        class="flex flex-wrap justify-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-400">
+                        <a class="hover:text-primary transition-colors" href="#"
+                            data-i18n="footer.links.privacy">Privacy Policy</a>
+                        <a class="hover:text-primary transition-colors" href="#" data-i18n="footer.links.terms">Terms of
+                            Service</a>
+                        <a class="hover:text-primary transition-colors" href="#" data-i18n="footer.links.cookies">Cookie
+                            Settings</a>
+                    </div>
+                    <p class="text-sm text-slate-500" data-i18n="footer.copyright">
+                        © 2026 CHINOO App Inc. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile Footer -->
+    <div id="sticky-footer"
+        class="fixed bottom-0 left-0 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 z-50 md:hidden shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div class="px-4 py-3 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm shrink-0">
+                    <span class="text-white font-serif font-bold text-lg">漢</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-slate-900 dark:text-white leading-tight">CHINOO</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium line-clamp-1"
+                        data-i18n="sticky.slogan">Learn Real Chinese, Win Real Future</span>
+                </div>
+            </div>
+            <div id="sticky-download-btn-container" class="shrink-0">
+                <!-- Button Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Translations Data -->
+    <script>
+        const translations = {
+            en: {
+                nav: {
+                    home: "Home",
+                    about: "About",
+                    features: "Reasons",
+                    contact: "Contact",
+                    download: "Download"
+                },
+                meta: {
+                    title: "CHINOO - Learn Real Chinese, Win Real Future",
+                    description: "The world's most fun and effective way to learn Chinese. Master Mandarin with CHINOO's immersive lessons and real-world practice.",
+                    keywords: "learn chinese, mandarin app, chinese learning, chinoo, speak chinese"
+                },
+                hero: {
+                    title_line_1: "Master Chinese",
+                    title_line_2: "Anytime, Anywhere",
+                    pill: "Learn Real Chinese, Win Real Future.",
+                    description: "The world's most fun and effective way to learn Chinese. Used by millions of learners worldwide to bridge cultures."
+                },
+                buttons: {
+                    get_it_on: "Get it on",
+                    google_play: "Google Play",
+                    download_on: "Download on the",
+                    app_store: "App Store"
+                },
+                stats: {
+                    learners: { count: "5M+", label: "Active Learners" },
+                    rating: { count: "4.9", label: "App Rating" },
+                    countries: { count: "180+", label: "Countries" },
+                    lessons: { count: "2k+", label: "Lessons" }
+                },
+                about: {
+                    chip: "Discover",
+                    title: "Our Chinese Learning Story",
+                    subtitle: "Discover our learning philosophy.",
+                    slide_sub: "Core Philosophy",
+                    slide_title_1: "Learn Chinese",
+                    slide_title_2: "The Fun Way",
+                    slide_desc: "Experience a revolutionary way to master Mandarin. Our app combines scientifically proven methods with gamified elements to make learning addictive and effective.",
+                    slide_sub_2: "Immersive Practice",
+                    slide_title_2_1: "Speak Like a Local",
+                    slide_title_2_2: "Real Conversations",
+                    slide_desc_2: "Practice real-world scenarios with our AI conversation partner. Get instant feedback on your pronunciation and fluency.",
+                    phone_greeting: "Ni Hao!",
+                    phone_chat_header: "Chat",
+                    phone_mic_hint: "Tap to Speak",
+                    slide_sub_3: "Cultural Insights",
+                    slide_title_3_1: "Master the Culture",
+                    slide_title_3_2: "Beyond Words",
+                    slide_desc_3: "Understand the history and traditions behind the language. Learn idioms, customs, and etiquette to truly connect.",
+                    phone_culture_header: "Culture",
+                    phone_culture_title: "Dining Etiquette",
+                    phone_culture_desc: "Did you know? It's polite to leave a little bit of food on your plate to show the host gave you enough!"
+                },
+                features: {
+                    chip: "YǑU SHÌ • OUR ADVANTAGE",
+                    title: "Why Learning With Us?",
+                    subtitle: "Why students choose us.",
+                    f1: {
+                        title: "Native Mastery",
+                        subtitle: "fā yīn biāo zhǔn",
+                        desc: "Perfect your tones with advanced AI feedback and real native recordings from speakers in Beijing."
+                    },
+                    f2: {
+                        title: "Cultural Context",
+                        subtitle: "wén huà dǐ yùn",
+                        desc: "Deep dive into history and modern life through immersive storytelling, from ancient poems to modern slang."
+                    },
+                    f3: {
+                        title: "Smart Adaptation",
+                        subtitle: "zhì néng xué xí",
+                        desc: "Your journey adapts to your pace. Our algorithm ensures every minute counts toward true fluency."
+                    }
+                },
+                cta: {
+                    title: "Start Your Journey Today!",
+                    subtitle: "Join our global community.",
+                    desc: "Join 5M+ global learners & master Chinese with ease"
+                },
+                footer: {
+                    title: "Contact Us",
+                    subtitle: "Get in touch with us.",
+                    desc: "Join our vibrant community on social media or reach out directly.",
+                    x_follow: "Follow on X",
+                    chat_whatsapp: "Chat on WhatsApp",
+                    email_support: "Email Support",
+                    links: {
+                        privacy: "Privacy Policy",
+                        terms: "Terms of Service",
+                        cookies: "Cookie Settings"
+                    },
+                    copyright: "© 2026 CHINOO App Inc. All rights reserved."
+                },
+                sticky: {
+                    slogan: "Learn Real Chinese, Win Real Future"
+                }
+            },
+            cn: {
+                nav: {
+                    home: "首页",
+                    about: "关于我们",
+                    features: "特色",
+                    contact: "联系我们",
+                    download: "下载"
+                },
+                meta: {
+                    title: "CHINOO - 学地道中文，赢未来机遇",
+                    description: "世界上最有趣、最有效的中文学习方式。通过CHINOO的沉浸式课程和真实场景练习掌握普通话。",
+                    keywords: "学中文, 汉语学习, 普通话App, CHINOO, 说中文"
+                },
+                hero: {
+                    title_line_1: "精通中文",
+                    title_line_2: "随时随地",
+                    pill: "学地道中文，赢未来机遇",
+                    description: "世界上最有趣、最有效的中文学习方式。全球数百万学习者使用它来连接文化。"
+                },
+                buttons: {
+                    get_it_on: "获取应用",
+                    google_play: "Google Play",
+                    download_on: "下载应用",
+                    app_store: "App Store"
+                },
+                stats: {
+                    learners: { count: "500万+", label: "活跃学员" },
+                    rating: { count: "4.9", label: "应用评分" },
+                    countries: { count: "180+", label: "国家/地区" },
+                    lessons: { count: "2000+", label: "课程" }
+                },
+                about: {
+                    chip: "探索",
+                    title: "我们的中文学习故事",
+                    subtitle: "探索我们的学习理念。",
+                    slide_sub: "核心理念",
+                    slide_title_1: "快乐学习",
+                    slide_title_2: "趣味中文",
+                    slide_desc: "体验革命性的普通话掌握方式。我们的应用结合了科学验证的方法和游戏化元素，让学习变得令人着迷且高效。",
+                    slide_sub_2: "沉浸式练习",
+                    slide_title_2_1: "像当地人一样说话",
+                    slide_title_2_2: "真实对话",
+                    slide_desc_2: "通过我们的AI对话伙伴练习真实场景。即时获得关于发音和流利度的反馈。",
+                    phone_greeting: "你好！",
+                    phone_chat_header: "聊天",
+                    phone_mic_hint: "点击说话",
+                    slide_sub_3: "文化洞察",
+                    slide_title_3_1: "精通文化",
+                    slide_title_3_2: "超越语言",
+                    slide_desc_3: "了解语言背后的历史和传统。学习成语、习俗和礼仪，真正建立连接。",
+                    phone_culture_header: "文化",
+                    phone_culture_title: "餐桌礼仪",
+                    phone_culture_desc: "你知道吗？在盘子里留一点食物表示主人招待得很周到，这是一种礼貌！"
+                },
+                features: {
+                    chip: "优势 • OUR ADVANTAGE",
+                    title: "为什么选择我们？",
+                    subtitle: "为什么学生选择我们。",
+                    f1: {
+                        title: "母语级掌握",
+                        subtitle: "发音标准",
+                        desc: "通过先进的AI反馈和来自北京的真实母语录音，完善你的声调。"
+                    },
+                    f2: {
+                        title: "文化语境",
+                        subtitle: "文化底蕴",
+                        desc: "通过沉浸式故事讲述，从古诗词到现代俚语，深入了解历史和现代生活。"
+                    },
+                    f3: {
+                        title: "智能适应",
+                        subtitle: "智能学习",
+                        desc: "你的学习之旅适应你的节奏。我们的算法确保每一分钟都有助于真正的流利。"
+                    }
+                },
+                cta: {
+                    title: "今天开始你的旅程！",
+                    subtitle: "加入我们的全球社区。",
+                    desc: "加入500多万全球学习者，轻松掌握中文"
+                },
+                footer: {
+                    title: "联系我们",
+                    subtitle: "与我们取得联系。",
+                    desc: "在社交媒体上加入我们充满活力的社区或直接联系我们。",
+                    x_follow: "关注 X",
+                    chat_whatsapp: "WhatsApp 聊天",
+                    email_support: "邮件支持",
+                    links: {
+                        privacy: "隐私政策",
+                        terms: "服务条款",
+                        cookies: "Cookie 设置"
+                    },
+                    copyright: "© 2026 CHINOO App Inc. 保留所有权利。"
+                },
+                sticky: {
+                    slogan: "学地道中文，赢未来机遇"
+                }
+            },
+            ar: {
+                nav: {
+                    home: "الرئيسية",
+                    about: "من نحن",
+                    features: "المميزات",
+                    contact: "اتصل بنا",
+                    download: "تحميل"
+                },
+                meta: {
+                    title: "CHINOO - تعلم الصينية الحقيقية، واكسب مستقبلاً حقيقياً",
+                    description: "الطريقة الأكثر متعة وفعالية في العالم لتعلم اللغة الصينية. أتقن الماندرين مع دروس CHINOO الغامرة والممارسة الواقعية.",
+                    keywords: "تعلم الصينية, تطبيق صيني, لغة الماندرين, CHINOO, تحدث الصينية"
+                },
+                hero: {
+                    title_line_1: "أتقن الصينية",
+                    title_line_2: "في أي وقت ومكان",
+                    pill: "تعلم الصينية الحقيقية، واكسب مستقبلاً حقيقياً",
+                    description: "الطريقة الأكثر متعة وفعالية في العالم لتعلم اللغة الصينية. يستخدمها ملايين المتعلمين حول العالم لمد الجسور بين الثقافات."
+                },
+                buttons: {
+                    get_it_on: "احصل عليه من",
+                    google_play: "Google Play",
+                    download_on: "حمله من",
+                    app_store: "App Store"
+                },
+                stats: {
+                    learners: { count: "5M+", label: "متعلم نشط" },
+                    rating: { count: "4.9", label: "تقييم التطبيق" },
+                    countries: { count: "180+", label: "دولة" },
+                    lessons: { count: "2k+", label: "درس" }
+                },
+                about: {
+                    chip: "اكتشف",
+                    title: "قصتنا في تعلم الصينية",
+                    subtitle: "اكتشف فلسفتنا في التعلم.",
+                    slide_sub: "الفلسفة الأساسية",
+                    slide_title_1: "تعلم الصينية",
+                    slide_title_2: "بطريقة ممتعة",
+                    slide_desc: "جرب طريقة ثورية لإتقان لغة الماندرين. يجمع تطبيقنا بين الأساليب المثبتة علمياً والعناصر الشبيهة بالألعاب لجعل التعلم جذاباً وفعالاً.",
+                    slide_sub_2: "ممارسة غامرة",
+                    slide_title_2_1: "تحدث كالسكان المحليين",
+                    slide_title_2_2: "محادثات حقيقية",
+                    slide_desc_2: "مارس سيناريوهات من العالم الحقيقي مع شريك المحادثة بالذكاء الاصطناعي. احصل على ملاحظات فورية على نطقك وطلاقتك.",
+                    phone_greeting: "ني هاو!",
+                    phone_chat_header: "محادثة",
+                    phone_mic_hint: "انقر للتحدث",
+                    slide_sub_3: "رؤى ثقافية",
+                    slide_title_3_1: "أتقن الثقافة",
+                    slide_title_3_2: "ما وراء الكلمات",
+                    slide_desc_3: "افهم التاريخ والتقاليد وراء اللغة. تعلم المصطلحات والعادات والآداب للتواصل الحقيقي.",
+                    phone_culture_header: "ثقافة",
+                    phone_culture_title: "آداب الطعام",
+                    phone_culture_desc: "هل تعلم؟ من الأدب ترك القليل من الطعام في طبقك لإظهار أن المضيف قدم لك ما يكفي!"
+                },
+                features: {
+                    chip: "ميزتنا",
+                    title: "لماذا تتعلم معنا؟",
+                    subtitle: "لماذا يختارنا الطلاب.",
+                    f1: {
+                        title: "إتقان كالأصليين",
+                        subtitle: "نطق قياسي",
+                        desc: "أتقن نغماتك مع ملاحظات الذكاء الاصطناعي المتقدمة وتسجيلات حقيقية من متحدثين أصليين في بكين."
+                    },
+                    f2: {
+                        title: "سياق ثقافي",
+                        subtitle: "عمق ثقافي",
+                        desc: "انغمس في التاريخ والحياة الحديثة من خلال سرد القصص الغامر، من القصائد القديمة إلى العامية الحديثة."
+                    },
+                    f3: {
+                        title: "تكيف ذكي",
+                        subtitle: "تعلم ذكي",
+                        desc: "رحلتك تتكيف مع وتيرتك. تضمن خوارزميتنا أن كل دقيقة تحسب نحو الطلاقة الحقيقية."
+                    }
+                },
+                cta: {
+                    title: "ابدأ رحلتك اليوم!",
+                    subtitle: "انضم إلى مجتمعنا العالمي.",
+                    desc: "انضم إلى أكثر من 5 ملايين متعلم عالمي وأتقن الصينية بسهولة"
+                },
+                footer: {
+                    title: "اتصل بنا",
+                    subtitle: "تواصل معنا.",
+                    desc: "انضم إلى مجتمعنا النابض بالحياة على وسائل التواصل الاجتماعي أو تواصل معنا مباشرة.",
+                    x_follow: "تابعنا على X",
+                    chat_whatsapp: "دردش على WhatsApp",
+                    email_support: "دعم البريد الإلكتروني",
+                    links: {
+                        privacy: "سياسة الخصوصية",
+                        terms: "شروط الخدمة",
+                        cookies: "إعدادات ملفات تعريف الارتباط"
+                    },
+                    copyright: "© 2026 CHINOO App Inc. جميع الحقوق محفوظة."
+                },
+                sticky: {
+                    slogan: "تعلم الصينية الحقيقية، واكسب مستقبلاً حقيقياً"
+                }
+            }
+        };
+
+        window.translations = translations;
+    </script>
+
+    <!-- Main Script -->
+    <script>
+        // Language Handling
+        function updateContent(lang) {
+            if (!window.translations || !window.translations[lang]) return;
+
+            var content = window.translations[lang];
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            // Update Text
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                var key = el.getAttribute('data-i18n');
+                var keys = key.split('.');
+                let value = content;
+                for (var k of keys) {
+                    value = value ? value[k] : null;
+                }
+                if (value) el.textContent = value;
+            });
+
+            updateLanguageIndicators(lang);
+
+            // Update SEO Meta Tags
+            if (content.meta) {
+                document.title = content.meta.title;
+                const setMeta = (name, content, attr = 'name') => {
+                    const element = document.querySelector(`meta[${attr}="${name}"]`);
+                    if (element) element.setAttribute('content', content);
+                };
+
+                setMeta('description', content.meta.description);
+                setMeta('keywords', content.meta.keywords);
+                setMeta('og:title', content.meta.title, 'property');
+                setMeta('og:description', content.meta.description, 'property');
+                setMeta('twitter:title', content.meta.title, 'property');
+                setMeta('twitter:description', content.meta.description, 'property');
+            }
+
+
+            // Re-render footer to ensure correct button type if logic depended on lang (it doesn't usually, but good practice)
+            // renderStickyFooter(); 
+            // Actually renderStickyFooter depends on OS, not lang directly, but the TEXT inside it depends on Lang.
+            // updateContent already updates DOM text.
+        }
+
+        function updateLanguageIndicators(lang) {
+            // Update mobile menu checkmarks (if implemented, mostly purely visual for now)
+            // Since we simplified the button list in this iteration, we might not have checkmarks,
+            // but let's keep the function for extensibility or if we add active states later.
+            // For the dropdown list design, we can perhaps highlight the active button.
+            // In the HTML I wrote:
+            // <button ... onclick="switchLanguage('en'); toggleMobileMenu()">English</button>
+            // We can add active styling here if needed.
+
+            // Let's add simple active state class toggling if elements exist
+            var buttons = document.querySelectorAll('#mobile-menu button');
+            buttons.forEach(btn => {
+                var txt = btn.textContent.toLowerCase();
+                if ((txt.includes('english') && lang === 'en') ||
+                    (txt.includes('中文') && lang === 'cn') ||
+                    (txt.includes('لغة') && lang === 'ar')) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-slate-100', 'dark:bg-slate-800');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-slate-100', 'dark:bg-slate-800');
+                }
+            });
+        }
+
+        function switchLanguage(lang) {
+            updateContent(lang);
+            // PERSIST: Only save to localStorage when manually modified by the user
+            localStorage.setItem('chinoo_lang', lang);
+        }
+
+        function getBrowserLanguage() {
+            var browserLang = navigator.language || navigator.userLanguage || 'en';
+            if (browserLang.toLowerCase().includes('ar')) return 'ar';
+            if (browserLang.toLowerCase().includes('zh')) return 'cn';
+            return 'en';
+        }
+
+        function getInitialLanguage() {
+            // Priority 1: Search engine entry (URL param)
+            // Displays the language from the link even if a preference was previously saved.
+            var urlParams = new URLSearchParams(window.location.search);
+            var langParam = urlParams.get('lang');
+            if (langParam && ['en', 'cn', 'ar'].includes(langParam)) return langParam;
+
+            // Priority 2: Returning visit with manual modification
+            var savedLang = localStorage.getItem('chinoo_lang');
+            if (savedLang && ['en', 'cn', 'ar'].includes(savedLang)) return savedLang;
+
+            // Priority 3: First visit (Direct access) fallback to browser language
+            return getBrowserLanguage();
+        }
+
+        // Language Menu Logic
+        function toggleLanguageMenu(e) {
+            if (e) e.stopPropagation();
+            var langMenu = document.getElementById('language-dropdown');
+            langMenu.classList.toggle('hidden');
+
+            // Close mobile menu if open
+            var mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // Mobile Menu Logic
+        var mobileMenu = document.getElementById('mobile-menu');
+        var hamburgerBtn = document.getElementById('hamburger-btn');
+
+        function toggleMobileMenu(e) {
+            if (e) e.stopPropagation();
+            var menu = document.getElementById('mobile-menu');
+            var isHidden = menu.classList.contains('hidden');
+
+            // Toggle Menu
+            menu.classList.toggle('hidden');
+
+            // Toggle Hamburger Animation
+            var line1 = document.getElementById('ham-line-1');
+            var line2 = document.getElementById('ham-line-2');
+            var line3 = document.getElementById('ham-line-3');
+
+            if (isHidden) {
+                // Now Open
+                line1.classList.add('rotate-45', 'translate-y-2');
+                line2.classList.add('opacity-0');
+                line3.classList.add('-rotate-45', '-translate-y-2');
+            } else {
+                // Now Closed
+                line1.classList.remove('rotate-45', 'translate-y-2');
+                line2.classList.remove('opacity-0');
+                line3.classList.remove('-rotate-45', '-translate-y-2');
+            }
+
+            // Close language menu if open
+            var langMenu = document.getElementById('language-dropdown');
+            if (langMenu && !langMenu.classList.contains('hidden')) {
+                langMenu.classList.add('hidden');
+            }
+        }
+
+        function closeMobileMenu() {
+            var menu = document.getElementById('mobile-menu');
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+
+                // Reset Hamburger
+                var line1 = document.getElementById('ham-line-1');
+                var line2 = document.getElementById('ham-line-2');
+                var line3 = document.getElementById('ham-line-3');
+                if (line1) {
+                    line1.classList.remove('rotate-45', 'translate-y-2');
+                    line2.classList.remove('opacity-0');
+                    line3.classList.remove('-rotate-45', '-translate-y-2');
+                }
+            }
+            var langMenu = document.getElementById('language-dropdown');
+            if (langMenu && !langMenu.classList.contains('hidden')) {
+                langMenu.classList.add('hidden');
+            }
+        }
+
+        // Close on click outside or scroll or swipe
+        var closeAllMenus = (e) => {
+            var menu = document.getElementById('mobile-menu');
+            var hamburger = document.getElementById('hamburger-btn');
+            var langMenu = document.getElementById('language-dropdown');
+            var langToggleBtn = document.getElementById('lang-dropdown-button');
+
+            // Check if click/tap is inside any menu or its toggle button
+            var inMobileMenu = menu && !menu.classList.contains('hidden') && menu.contains(e.target);
+            var inHamburger = hamburger && hamburger.contains(e.target);
+            var inLangMenu = langMenu && !langMenu.classList.contains('hidden') && langMenu.contains(e.target);
+            var inLangToggle = langToggleBtn && langToggleBtn.contains(e.target);
+
+            // Close mobile menu if open and click/tap is outside it and its toggle
+            if (menu && !menu.classList.contains('hidden') && !inMobileMenu && !inHamburger) {
+                menu.classList.add('hidden');
+            }
+
+            // Close language menu if open and click/tap is outside it and its toggle
+            if (langMenu && !langMenu.classList.contains('hidden') && !inLangMenu && !inLangToggle) {
+                langMenu.classList.add('hidden');
+            }
+        };
+
+        // Event Listeners for closing mechanics
+        document.addEventListener('click', closeAllMenus);
+        document.addEventListener('touchstart', closeAllMenus, { passive: true }); // Close on external tap/swipe
+
+        // Close on scroll
+        window.addEventListener('scroll', () => {
+            var menu = document.getElementById('mobile-menu');
+            var langMenu = document.getElementById('language-dropdown');
+            if (menu && !menu.classList.contains('hidden')) menu.classList.add('hidden');
+            if (langMenu && !langMenu.classList.contains('hidden')) langMenu.classList.add('hidden');
+        }, { passive: true });
+
+        // Slider Logic
+        let currentSlide = 0;
+        var totalSlides = 3;
+        let autoplayInterval;
+        let isAutoplayPaused = false;
+        let inactivityTimer; // Timer for resuming autoplay
+
+        // Gesture Variables
+        let startX = 0;
+        let isDragging = false;
+        var sliderContainer = document.getElementById('about-slider-container');
+
+        function showSlide(index) {
+            // Normalize index
+            if (index >= totalSlides) index = 0;
+            if (index < 0) index = totalSlides - 1;
+
+            currentSlide = index;
+
+            // Hide all slides
+            for (let i = 1; i <= totalSlides; i++) {
+                var slide = document.getElementById(`slide-${i}`);
+                if (slide) {
+                    slide.classList.remove('relative', 'z-10', 'opacity-100', 'pointer-events-auto');
+                    slide.classList.add('absolute', 'inset-0', 'opacity-0', 'pointer-events-none', '-z-10');
+                }
+            }
+
+            // Show current slide
+            var activeSlide = document.getElementById(`slide-${currentSlide + 1}`);
+            if (activeSlide) {
+                activeSlide.classList.remove('absolute', 'inset-0', 'opacity-0', 'pointer-events-none', '-z-10');
+                activeSlide.classList.add('relative', 'z-10', 'opacity-100', 'pointer-events-auto');
+            }
+
+            // Update dots (bars)
+            var dots = document.querySelectorAll('.dot-indicator');
+            dots.forEach((dot, i) => {
+                if (i === currentSlide) {
+                    dot.classList.remove('w-4', 'bg-slate-200', 'dark:bg-slate-700', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                    dot.classList.add('w-12', 'bg-primary');
+                } else {
+                    dot.classList.add('w-4', 'bg-slate-200', 'dark:bg-slate-700', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                    dot.classList.remove('w-12', 'bg-primary');
+                }
+            });
+        }
+
+        function nextSlide() {
+            stopAutoplay();
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            stopAutoplay();
+            showSlide(currentSlide - 1);
+        }
+
+        function goToSlide(index) {
+            stopAutoplay();
+            showSlide(index);
+        }
+
+        function startAutoplay() {
+            if (autoplayInterval) clearInterval(autoplayInterval);
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+
+            isAutoplayPaused = false;
+            autoplayInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000); // 5 seconds per slide
+        }
+
+        function stopAutoplay() {
+            if (autoplayInterval) clearInterval(autoplayInterval);
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+
+            isAutoplayPaused = true;
+
+            // Resume after 5 seconds of inactivity
+            inactivityTimer = setTimeout(() => {
+                startAutoplay();
+            }, 5000);
+        }
+
+        // Gesture Logic
+        if (sliderContainer) {
+            sliderContainer.addEventListener('mousedown', (e) => {
+                stopAutoplay();
+                isDragging = true;
+                startX = e.clientX;
+                sliderContainer.style.cursor = 'grabbing';
+            });
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+                stopAutoplay();
+                isDragging = true;
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            sliderContainer.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault(); // Prevent text selection while dragging
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                handleSwipeEnd(e.clientX);
+            });
+
+            sliderContainer.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                handleSwipeEnd(e.changedTouches[0].clientX);
+            });
+        }
+
+        function handleSwipeEnd(endX) {
+            if (!isDragging) return;
+            isDragging = false;
+            if (sliderContainer) sliderContainer.style.cursor = '';
+
+            var diff = startX - endX;
+            var threshold = 50; // min distance for swipe
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swiped left -> Next
+                } else {
+                    prevSlide(); // Swiped right -> Prev
+                }
+            } else {
+                startAutoplay();
+            }
+        }
+
+        // Initialize Slider
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(0);
+            startAutoplay();
+        });
+
+        // Resume Autoplay logic handle - simplified as stopAutoplay now handles resume timer
+        function handleGlobalInteraction(e) {
+            // We just need to reset the inactivity timer on any interaction
+            if (isAutoplayPaused) {
+                stopAutoplay(); // This resets the 5s timer
+            }
+        }
+
+        document.addEventListener('mousedown', handleGlobalInteraction);
+        document.addEventListener('touchstart', handleGlobalInteraction, { passive: true });
+
+        window.addEventListener('scroll', () => {
+            if (isAutoplayPaused) stopAutoplay(); // Reset timer on scroll
+        }, { passive: true });
+
+        // Theme Handling
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            var isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('chinoo_theme', isDark ? 'dark' : 'light');
+        }
+
+        function initTheme() {
+            var savedTheme = localStorage.getItem('chinoo_theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            var lang = getInitialLanguage();
+            updateContent(lang);
+
+            // Render Download Buttons
+            renderDownloadButtons('buttons-hero');
+            renderDownloadButtons('buttons-about-mobile');
+            renderDownloadButtons('buttons-about-desktop');
+            renderDownloadButtons('buttons-download');
+
+            // Sticky Footer Logic
+            renderStickyFooter();
+        });
+    </script>
+</body>
+
+</html>
