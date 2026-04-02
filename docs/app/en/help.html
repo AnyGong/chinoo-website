@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Speak Chinese - Help Center</title>
+    <meta name="description" content="Help Center for Easy Speak Chinese app. Find answers to common questions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4D4D;
+            --primary-hover: #E63E3E;
+            --background: #FFFFFF;
+            --secondary: #F7F7F7;
+            --text: #1A1A1A;
+            --text-muted: #666666;
+            --border: #EEEEEE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--background);
+        }
+
+        .header {
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metadata {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--secondary);
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+
+        .faq-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .faq-item h3::before {
+            content: '?';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-size: 0.7rem;
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="metadata">Date: April 2, 2026 | Institution: Easy Speak Chinese Team | Last Updated: April 2, 2026</div>
+        <h1>Help Center</h1>
+        <p>Your comprehensive guide to mastering Chinese with Easy Speak Chinese.</p>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title">Getting Started</h2>
+        <div class="faq-item">
+            <h3>How do I start my first lesson?</h3>
+            <p>Simply navigate to the "Learn" tab on the main dashboard. If you're a complete beginner, we strongly recommend starting with the "Pinyin Basics" module to master the tones and pronunciation foundations before moving to vocabulary.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is there a placement test?</h3>
+            <p>Yes! Upon your first login, you can opt to take our 10-minute AI-driven placement test. It assesses your listening, reading, and speaking skills to recommend the most suitable HSK level for your start.</p>
+        </div>
+
+        <h2 class="section-title">Learning Experience</h2>
+        <div class="faq-item">
+            <h3>How does voice recognition work?</h3>
+            <p>Our app uses advanced neural networks to analyze your pronunciation against native speaker samples. For the best results, ensure you're in a quiet environment and speak clearly into your device's microphone.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can I learn offline?</h3>
+            <p>Premium subscribers can download entire modules for offline use. Look for the "Download" icon at the top right of any module page. Your progress will automatically sync once you're back online.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What are 'Daily Streaks'?</h3>
+            <p>Streaks track how many consecutive days you've completed at least one lesson. Maintaining a streak earns you "Panda Points" which can be used to unlock bonus culture modules and special avatars.</p>
+        </div>
+
+        <h2 class="section-title">Account & Billing</h2>
+        <div class="faq-item">
+            <h3>How do I manage my subscription?</h3>
+            <p>Go to Profile > Settings > Subscription. From there, you can view your current plan, upgrade to Premium, or manage your renewal settings. Subscriptions managed via the App Store or Google Play must be cancelled through their respective platforms.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can I sync my progress across multiple devices?</h3>
+            <p>Yes. As long as you log in with the same account (Email, Google, or Apple ID), your progress, streaks, and Panda Points will sync automatically across all iOS and Android devices.</p>
+        </div>
+
+        <h2 class="section-title">Technical Support</h2>
+        <div class="faq-item">
+            <h3>The app is crashing or freezing. What should I do?</h3>
+            <p>First, ensure you are running the latest version of the app from the Store. If problems persist, try clearing the app cache in Settings > Storage > Clear Cache. If that fails, please reach out via the 'Contact Us' button below.</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 Easy Speak Chinese. All rights reserved.
+    </footer>
+</body>
+</html>

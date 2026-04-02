@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Speak Chinese - 帮助中心</title>
+    <meta name="description" content="Easy Speak Chinese 帮助中心。查找常见问题的解答。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4D4D;
+            --primary-hover: #E63E3E;
+            --background: #FFFFFF;
+            --secondary: #F7F7F7;
+            --text: #1A1A1A;
+            --text-muted: #666666;
+            --border: #EEEEEE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--background);
+        }
+
+        .header {
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metadata {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--secondary);
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+
+        .faq-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .faq-item h3::before {
+            content: '?';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-size: 0.7rem;
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="metadata">日期: 2026年4月2日 | 机构: Easy Speak Chinese 团队 | 最后更新: 2026年4月2日</div>
+        <h1>帮助中心</h1>
+        <p>您使用 Easy Speak Chinese 掌握中文的综合指南。</p>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title">入门指南</h2>
+        <div class="faq-item">
+            <h3>如何开始我的第一课？</h3>
+            <p>只需导航到主仪表板上的“学习”选项卡。如果您是完全的初学者，我们强烈建议您从“拼音基础”模块开始，在进入词汇学习之前掌握声调和发音基础。</p>
+        </div>
+        <div class="faq-item">
+            <h3>有水平测试吗？</h3>
+            <p>是的！在您第一次登录时，您可以选择参加我们为时 10 分钟的 AI 驱动水平测试。它会评估您的听、读、说技能，从而推荐最适合您的 HSK 起始级别。</p>
+        </div>
+
+        <h2 class="section-title">学习体验</h2>
+        <div class="faq-item">
+            <h3>语音识别是如何工作的？</h3>
+            <p>我们的应用程序使用先进的神经网络分析您的发音，并与母语者的样本进行对比。为了获得最佳效果，请确保您处于安静的环境中，并清晰地对着设备的麦克风说话。</p>
+        </div>
+        <div class="faq-item">
+            <h3>我可以离线学习吗？</h3>
+            <p>高级订阅者可以下载整个模块进行离线使用。请在任何模块页面的右上角寻找“下载”图标。您的进度将在您重新上线时自动同步。</p>
+        </div>
+        <div class="faq-item">
+            <h3>什么是“每日连胜”？</h3>
+            <p>连胜记录展示您连续完成至少一节课的天数。保持连胜将为您赢得“熊猫积分”，可用于解锁额外文化模块和特殊头像。</p>
+        </div>
+
+        <h2 class="section-title">账户与账单</h2>
+        <div class="faq-item">
+            <h3>如何管理我的订阅？</h3>
+            <p>前往：个人资料 > 设置 > 订阅。在这里，您可以查看当前方案、升级到 Premium 或管理续订设置。通过 App Store 或 Google Play 管理的订阅必须通过其各自的平台取消。</p>
+        </div>
+        <div class="faq-item">
+            <h3>我可以在多台设备上同步进度吗？</h3>
+            <p>是的。只要您使用同一个账户（邮箱、Google 或 Apple ID）登录，您的进度、连胜记录和熊猫积分将在所有 iOS 和 Android 设备上自动同步。</p>
+        </div>
+
+        <h2 class="section-title">技术支持</h2>
+        <div class="faq-item">
+            <h3>应用程序崩溃或卡顿。我该怎么办？</h3>
+            <p>首先，请确保您运行的是商店中的最新版本。如果问题仍然存在，请尝试在“设置 > 存储 > 清除缓存”中清除应用缓存。如果仍然失败，请通过下方的“联系我们”按钮联系我们。</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 Easy Speak Chinese. 版权所有。
+    </footer>
+</body>
+</html>

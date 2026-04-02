@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Speak Chinese - مركز المساعدة</title>
+    <meta name="description" content="مركز المساعدة لتطبيق Easy Speak Chinese. ابحث عن إجابات للأسئلة الشائعة.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4D4D;
+            --primary-hover: #E63E3E;
+            --background: #FFFFFF;
+            --secondary: #F7F7F7;
+            --text: #1A1A1A;
+            --text-muted: #666666;
+            --border: #EEEEEE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Amiri', serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--background);
+        }
+
+        .header {
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metadata {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--secondary);
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+
+        .faq-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .faq-item h3::before {
+            content: '؟';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            margin-left: 12px;
+            margin-top: 2px;
+            font-size: 0.7rem;
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="metadata">التاريخ: ٢ أبريل ٢٠٢٦ | المؤسسة: فريق Easy Speak Chinese | آخر تحديث: ٢ أبريل ٢٠٢٦</div>
+        <h1>مركز المساعدة</h1>
+        <p>دليلك الشامل لإتقان اللغة الصينية مع Easy Speak Chinese.</p>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title">البداية</h2>
+        <div class="faq-item">
+            <h3>كيف أبدأ درسي الأول؟</h3>
+            <p>بساطة، انتقل إلى علامة التبويب "تعلم" في لوحة التحكم الرئيسية. إذا كنت مبتدئاً تماماً، نوصي بشدة بالبدء بوحدة "أساسيات Pinyin" لإتقان النغمات وأسس النطق قبل الانتقال إلى المفردات.</p>
+        </div>
+        <div class="faq-item">
+            <h3>هل يوجد اختبار تحديد مستوى؟</h3>
+            <p>نعم! عند تسجيل الدخول لأول مرة، يمكنك اختيار خضوع لاختبار تحديد المستوى المدعوم بالذكاء الاصطناعي لمدة 10 دقائق. يقيم مهاراتك في الاستماع والقراءة والتحدث للتوصية بمستوى HSK الأكثر ملاءمة لبدايتك.</p>
+        </div>
+
+        <h2 class="section-title">تجربة التعلم</h2>
+        <div class="faq-item">
+            <h3>كيف يعمل التعرف على الصوت؟</h3>
+            <p>يستخدم تطبيقنا شبكات عصبية متقدمة لتحليل نطقك مقابل عينات من متحدثين أصليين. للحصول على أفضل النتائج، تأكد من وجودك في بيئة هادئة وتحدث بوضوح في ميكروفون جهازك.</p>
+        </div>
+        <div class="faq-item">
+            <h3>هل يمكنني التعلم دون اتصال بالإنترنت؟</h3>
+            <p>يمكن للمشتركين في الباقة المميزة تنزيل وحدات كاملة للاستخدام دون اتصال. ابحث عن أيقونة "تنزيل" في أعلى يمين أي صفحة وحدة. سيتم مزامنة تقدمك تلقائياً بمجرد عودتك للاتصال.</p>
+        </div>
+        <div class="faq-item">
+            <h3>ما هي 'سلاسل الأيام المتتالية'؟</h3>
+            <p>تتتبع السلاسل عدد الأيام المتتالية التي أكملت فيها درساً واحداً على الأقل. الحفاظ على السلسلة يمنحك "نقاط الباندا" التي يمكن استخدامها لفتح وحدات ثقافية إضافية وصور رمزية خاصة.</p>
+        </div>
+
+        <h2 class="section-title">الحساب والفواتير</h2>
+        <div class="faq-item">
+            <h3>كيف أدير اشتراكي؟</h3>
+            <p>انتقل إلى الملف الشخصي > الإعدادات > الاشتراك. من هناك، يمكنك عرض خطتك الحالية، أو الترقية إلى الباقة المميزة، أو إدارة إعدادات التجديد. الاشتراكات التي تتم عبر App Store أو Google Play يجب إلغاؤها من خلال منصاتهم الخاصة.</p>
+        </div>
+        <div class="faq-item">
+            <h3>هل يمكنني مزامنة تقدمي عبر أجهزة متعددة؟</h3>
+            <p>نعم. طالما قمت بتسجيل الدخول بنفس الحساب (البريد الإلكتروني، Google، أو Apple ID)، سيتم مزامنة تقدمك وسلاسل الأيام ونقاط الباندا تلقائياً عبر جميع أجهزة iOS و Android.</p>
+        </div>
+
+        <h2 class="section-title">الدعم الفني</h2>
+        <div class="faq-item">
+            <h3>التطبيق يتوقف أو يتجمد. ماذا أفعل؟</h3>
+            <p>أولاً، تأكد من أنك تقوم بتشغيل أحدث إصدار من التطبيق من المتجر. إذا استمرت المشاكل، حاول مسح ذاكرة التخزين المؤقت للتطبيق في الإعدادات > التخزين > مسح ذاكرة التخزين المؤقت. إذا فشل ذلك، يرجى التواصل معنا عبر زر 'اتصل بنا' أدناه.</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 Easy Speak Chinese. جميع الحقوق محفوظة.
+    </footer>
+</body>
+</html>
